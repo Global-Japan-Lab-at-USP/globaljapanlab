@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Japan Lab - University of São Paulo</title>
+    <meta name="description" content="Interdisciplinary research initiative introducing Global Japan Studies at USP through AI-assisted methodologies and international collaboration.">
+    
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            /* Tange-inspired Architectural Palette */
+            --concrete-light: #F5F5F5;
+            --concrete-medium: #E0E0E0;
+            --concrete-dark: #BDBDBD;
+            --structural-charcoal: #424242;
+            --tange-vermillion: #d9381e;
+            --tech-blue: #1976D2;
+            --deep-shadow: #212121;
+            --warm-white: #FAFAFA;
+            --accent-orange: #FF6F00;
+            --grid-overlay: rgba(66, 66, 66, 0.1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--deep-shadow);
+            background-color: #E8E8E8;
+            position: relative;
+        }
+        
+        /* Page Navigation System */
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Header and Navigation */
+        .header {
+            background: var(--warm-white);
+            border-bottom: 3px solid var(--tange-vermillion);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 80px;
+            position: relative;
+        }
+        
+        /* Structural lattice element in header */
+        .nav-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 100%;
+            background-image: 
+                linear-gradient(45deg, var(--concrete-medium) 2px, transparent 2px),
+                linear-gradient(-45deg, var(--concrete-medium) 2px, transparent 2px);
+            background-size: 20px 20px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--structural-charcoal);
+            text-decoration: none;
+            letter-spacing: -0.8px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            position: relative;
+            z-index: 2;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--structural-charcoal);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.8rem 1.2rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover {
+            color: var(--tange-vermillion);
+            background-color: var(--concrete-light);
+        }
+        
+        .nav-link.active {
+            color: var(--tange-vermillion);
+            background-color: var(--concrete-medium);
+            border-left: 3px solid var(--tange-vermillion);
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid var(--concrete-medium);
+        }
+        
+        .lang-btn {
+            background: var(--concrete-light);
+            border: 1px solid var(--concrete-medium);
+            color: var(--structural-charcoal);
+            padding: 0.4rem 0.8rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .lang-btn:hover {
+            background: var(--concrete-medium);
+            color: var(--tange-vermillion);
+        }
+        
+        .lang-btn.active {
+            background: var(--tange-vermillion);
+            color: var(--warm-white);
+            border-color: var(--tange-vermillion);
+        }
+        
+        /* Language Content */
+        .lang-content {
+            display: none;
+        }
+        
+        .lang-content.active {
+            display: block;
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .hamburger {
+            width: 25px;
+            height: 3px;
+            background: var(--structural-charcoal);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Hero Section - clean solid background */
+        .hero {
+            padding: 5rem 0;
+            background: var(--warm-white);
+            border-left: 6px solid var(--tange-vermillion);
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--structural-charcoal);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+        
+        .hero .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            color: var(--deep-shadow);
+        }
+        
+        /* Section Styles with structural elements */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--concrete-medium);
+            position: relative;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--tange-vermillion), var(--accent-orange));
+        }
+        
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--structural-charcoal);
+            margin-bottom: 2.5rem;
+            border-left: 6px solid var(--tange-vermillion);
+            padding-left: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            right: -2rem;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            background-image: 
+                linear-gradient(45deg, var(--concrete-dark) 1px, transparent 1px);
+            background-size: 8px 8px;
+            opacity: 0.3;
+        }
+        
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .methodology-card {
+            background: var(--warm-white);
+            padding: 2.5rem;
+            border-radius: 4px;
+            border: 2px solid var(--concrete-medium);
+            border-left: 6px solid var(--tange-vermillion);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle lattice in cards */
+        .methodology-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background-image: 
+                linear-gradient(45deg, var(--concrete-dark) 1px, transparent 1px),
+                linear-gradient(-45deg, var(--concrete-dark) 1px, transparent 1px);
+            background-size: 12px 12px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .methodology-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+            border-left-color: var(--tange-vermillion);
+        }
+        
+        .methodology-card h3 {
+            color: var(--structural-charcoal);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .methodology-card p {
+            position: relative;
+            z-index: 2;
+            line-height: 1.7;
+        }
+        
+        /* Publications List */
+        .publications-list {
+            background: var(--warm-white);
+            padding: 3rem;
+            border-radius: 4px;
+            border: 2px solid var(--concrete-medium);
+            border-left: 6px solid var(--tange-vermillion);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        .author-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--structural-charcoal);
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .author-name:first-child {
+            margin-top: 0;
+        }
+        
+        .publication-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--concrete-light);
+        }
+        
+        .publication-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .publication-title {
+            font-weight: 600;
+            color: var(--deep-shadow);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .publication-link {
+            color: var(--tange-vermillion);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .publication-link:hover {
+            color: var(--accent-orange);
+            text-decoration: underline;
+        }
+        
+        /* Team Bio Cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .team-card {
+            background: var(--warm-white);
+            padding: 2.5rem;
+            border-radius: 4px;
+            border: 2px solid var(--concrete-medium);
+            border-left: 6px solid var(--tange-vermillion);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background-image: 
+                linear-gradient(45deg, var(--concrete-dark) 1px, transparent 1px),
+                linear-gradient(-45deg, var(--concrete-dark) 1px, transparent 1px);
+            background-size: 12px 12px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--structural-charcoal);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .team-title {
+            color: var(--tange-vermillion);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .team-bio {
+            position: relative;
+            z-index: 2;
+            line-height: 1.7;
+        }
+        
+        /* Call to Action with structural elements */
+        .cta {
+            background: #98989C;
+            color: var(--warm-white);
+            padding: 4rem 3rem;
+            margin: 4rem 0;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Lattice pattern in CTA */
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, var(--grid-overlay) 2px, transparent 2px),
+                linear-gradient(90deg, var(--grid-overlay) 2px, transparent 2px);
+            background-size: 50px 50px;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        
+        .cta::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .cta:hover::after {
+            left: 100%;
+        }
+        
+        .cta h2 {
+            font-size: 2.4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta p {
+            position: relative;
+            z-index: 2;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--tange-vermillion);
+            color: var(--warm-white);
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 700;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            background: var(--accent-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.3);
+        }
+        
+        /* Footer with architectural grid */
+        .footer {
+            background: #98989C;
+            color: var(--concrete-light);
+            padding: 4rem 0 2rem;
+            margin-top: 5rem;
+            position: relative;
+        }
+        
+        /* Structural lattice in footer */
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(45deg, var(--structural-charcoal) 1px, transparent 1px),
+                linear-gradient(-45deg, var(--structural-charcoal) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer h3 {
+            color: var(--warm-white);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .footer a {
+            color: var(--concrete-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: var(--tange-vermillion);
+        }
+        
+        .footer-bottom {
+            border-top: 2px solid var(--structural-charcoal);
+            margin-top: 3rem;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--warm-white);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .main-content {
+                padding: 0 1rem;
+            }
+            
+            .methodology-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .language-selector {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <span class="logo" onclick="showPage('home')">Global Japan Lab</span>
+            <ul class="nav-menu" id="navMenu">
+                <li><span class="nav-link" onclick="showPage('home')" data-page="home">Home</span></li>
+                <li><span class="nav-link" onclick="showPage('team')" data-page="team">Research Team</span></li>
+                <li><span class="nav-link" onclick="showPage('publications')" data-page="publications">Publications</span></li>
+                <li><span class="nav-link" onclick="showPage('initiatives')" data-page="initiatives">Research Initiatives</span></li>
+                <li><span class="nav-link" onclick="showPage('resources')" data-page="resources">Resources</span></li>
+                <li><span class="nav-link" onclick="showPage('collaboration')" data-page="collaboration">Collaboration</span></li>
+                <li class="language-selector">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ja">日本語</button>
+                    <button class="lang-btn" data-lang="pt">PT</button>
+                </li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <div class="hamburger"></div>
+                <div class="hamburger"></div>
+                <div class="hamburger"></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <main class="main-content">
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="lang-content active" data-lang="en">
+                        <h1>Global Japan Lab</h1>
+                        <p class="description">
+                            This initiative aims to introduce Global Japan Studies at the University of São Paulo (USP) by fostering interdisciplinary methodologies, multilingual pedagogy, and sustained engagement in international research networks. It represents a fundamental rethinking of Japan Studies that transcends conventional area studies by de-centering nation-bound narratives to instead locate the study of Japan within truly comparative and transnational frameworks.
+                        </p>
+                    </div>
+                    <div class="lang-content" data-lang="ja">
+                        <h1>グローバル日本研究ラボ</h1>
+                        <p class="description">
+                            この取り組みは、学際的な方法論、多言語教育学、国際研究ネットワークへの持続的な参画を促進することにより、サンパウロ大学（USP）にグローバル日本研究を導入することを目的としています。これは、国家に縛られた物語を脱中心化し、真に比較的で超国家的な枠組みの中に日本研究を位置づけることで、従来の地域研究を超越する日本研究の根本的な再考を表しています。
+                        </p>
+                    </div>
+                    <div class="lang-content" data-lang="pt">
+                        <h1>Laboratório Global do Japão</h1>
+                        <p class="description">
+                            Esta iniciativa visa introduzir os Estudos Globais do Japão na Universidade de São Paulo (USP), promovendo metodologias interdisciplinares, pedagogia multilíngue e engajamento sustentado em redes internacionais de pesquisa. Representa um repensar fundamental dos Estudos Japoneses que transcende os estudos regionais convencionais, descentralizando narrativas limitadas por fronteiras nacionais para localizar o estudo do Japão dentro de estruturas verdadeiramente comparativas e transnacionais.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">About This Project</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
+                        This website serves as a static prototype for the classified Fapesp International Thematic Grant application by Dr. Seth Jacobowitz (PI) and Drs. Leiko Matsubara Morales, Silvio Miyazaki, Alexandre Uehara, and Lillian Yamamoto (Co-PIs). Integral to establishing a cutting-edge Global Japan Studies program at USP, this project proposes targeted investments in academic resources, student and faculty research support, and digital infrastructure.
+                    </p>
+                    <p style="font-size: 1rem; line-height: 1.6; color: #888888; font-style: italic;">
+                        The functional database-driven version of this platform will be developed upon grant funding, incorporating the full range of research tools and collaborative features outlined in our FAPESP International Thematic Grant proposal.
+                    </p>
+                </div>
+                <div class="lang-content" data-lang="ja">
+                    <h2 class="section-title">プロジェクトについて</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
+                        このウェブサイトは、セス・ヤコボウィッツ博士（主任研究者）および共同研究者であるレイコ・マツバラ・モラレス博士、シルビオ・ミヤザキ博士、アレクサンドレ・ウエハラ博士、リリアン・ヤマモト博士によるFAPESP国際テーマ別助成金申請の静的プロトタイプとして機能します。USPにおける最先端のグローバル日本研究プログラムの設立に不可欠な本プロジェクトは、学術資源、学生・教員研究支援、デジタルインフラへの戦略的投資を提案しています。
+                    </p>
+                    <p style="font-size: 1rem; line-height: 1.6; color: #888888; font-style: italic;">
+                        このプラットフォームの機能的なデータベース駆動版は、助成金の資金提供により開発され、FAPESP国際テーマ別助成金提案書に概説された研究ツールと協力機能の全範囲を組み込む予定です。
+                    </p>
+                </div>
+                <div class="lang-content" data-lang="pt">
+                    <h2 class="section-title">Sobre Este Projeto</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
+                        Este website serve como um protótipo estático para a candidatura classificada ao Auxílio Temático Internacional da FAPESP pelo Dr. Seth Jacobowitz (Pesquisador Principal) e pelos Drs. Leiko Matsubara Morales, Silvio Miyazaki, Alexandre Uehara e Lillian Yamamoto (Co-Pesquisadores Principais). Integral ao estabelecimento de um programa de ponta em Estudos Globais do Japão na USP, este projeto propõe investimentos direcionados em recursos acadêmicos, apoio à pesquisa estudantil e docente, e infraestrutura digital.
+                    </p>
+                    <p style="font-size: 1rem; line-height: 1.6; color: #888888; font-style: italic;">
+                        A versão funcional desta plataforma baseada em banco de dados será desenvolvida mediante o financiamento da bolsa, incorporando toda a gama de ferramentas de pesquisa e recursos colaborativos delineados em nossa proposta de Auxílio Temático Internacional da FAPESP.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">Research Methodologies</h2>
+                </div>
+                <div class="lang-content" data-lang="ja">
+                    <h2 class="section-title">研究方法論</h2>
+                </div>
+                <div class="lang-content" data-lang="pt">
+                    <h2 class="section-title">Metodologias de Pesquisa</h2>
+                </div>
+                <div class="methodology-grid">
+                    <div class="methodology-card">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>Interdisciplinary Collaboration</h3>
+                            <p>Facilitates research across economics, linguistics, literature, and international relations through common analytical frameworks while maintaining methodological consistency.</p>
+                        </div>
+                        <div class="lang-content" data-lang="ja">
+                            <h3>学際的協力</h3>
+                            <p>経済学、言語学、文学、国際関係学における研究を、方法論的一貫性を維持しながら共通の分析枠組みを通じて促進します。</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Colaboração Interdisciplinar</h3>
+                            <p>Facilita pesquisas em economia, linguística, literatura e relações internacionais através de estruturas analíticas comuns, mantendo consistência metodológica.</p>
+                        </div>
+                    </div>
+                    <div class="methodology-card">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>Social Sciences</h3>
+                            <p>Our researchers integrate empirical and statistical methods to investigate global geopolitics, trade policy, models of economic cooperation, and Japan's role in international systems.</p>
+                        </div>
+                        <div class="lang-content" data-lang="ja">
+                            <h3>社会科学</h3>
+                            <p>私たちの研究者は、実証的・統計的手法を統合し、グローバル地政学、貿易政策、経済協力モデル、国際システムにおける日本の役割を調査します。</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Ciências Sociais</h3>
+                            <p>Nossos pesquisadores integram métodos empíricos e estatísticos para investigar geopolítica global, política comercial, modelos de cooperação econômica e o papel do Japão em sistemas internacionais.</p>
+                        </div>
+                    </div>
+                    <div class="methodology-card">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>Humanities</h3>
+                            <p>Our researchers apply theoretical frameworks such as structural linguistics, media history, diaspora studies, gender studies, and memory studies.</p>
+                        </div>
+                        <div class="lang-content" data-lang="ja">
+                            <h3>人文学</h3>
+                            <p>私たちの研究者は、構造言語学、メディア史、ディアスポラ研究、ジェンダー研究、記憶研究などの理論的枠組みを適用します。</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Humanidades</h3>
+                            <p>Nossos pesquisadores aplicam estruturas teóricas como linguística estrutural, história da mídia, estudos da diáspora, estudos de gênero e estudos da memória.</p>
+                        </div>
+                    </div>
+                    <div class="methodology-card">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>Transnational Diaspora in Scalable Analysis</h3>
+                            <p>Enables systematic analysis of large corpora such as the decades' worth of Japanese Brazilian newspapers in Stanford University's Hoji Shinbun Digital Collection, identifying patterns that would require hundreds of hours of conventional research.</p>
+                        </div>
+                        <div class="lang-content" data-lang="ja">
+                            <h3>拡張可能な分析における超国家的ディアスポラ</h3>
+                            <p>スタンフォード大学の邦字新聞デジタルコレクションの数十年分の日系ブラジル新聞など、大規模コーパスの体系的分析を可能にし、従来の研究では数百時間を要するパターンを特定します。</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Diáspora Transnacional em Análise Escalável</h3>
+                            <p>Permite análise sistemática de grandes corpora, como décadas de jornais nipo-brasileiros na Coleção Digital Hoji Shinbun da Universidade de Stanford, identificando padrões que exigiriam centenas de horas de pesquisa convencional.</p>
+                        </div>
+                    </div>
+                    <div class="methodology-card">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>Global Economic &amp; Political Dynamics</h3>
+                            <p>Bridges Brazil-Japan relations to investigate trade policies within transnational networks and applying combining archival research and quantitative data analysis for macro-economic governance and international affairs.</p>
+                        </div>
+                        <div class="lang-content" data-lang="ja">
+                            <h3>グローバル経済・政治動態</h3>
+                            <p>ブラジル・日本関係を架橋し、超国家的ネットワーク内の貿易政策を調査し、マクロ経済ガバナンスと国際問題のためのアーカイブ研究と定量的データ分析を組み合わせて適用します。</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Dinâmicas Econômicas e Políticas Globais</h3>
+                            <p>Conecta as relações Brasil-Japão para investigar políticas comerciais dentro de redes transnacionais, aplicando e combinando pesquisa arquivística e análise quantitativa de dados para governança macroeconômica e assuntos internacionais.</p>
+                        </div>
+                    </div>
+                    <div class="methodology-card">
+                        <div class="lang-content active" data-lang="en">
+                            <h3>Applied Linguistics and Language Education</h3>
+                            <p>Investigates the revitalization of heritage Japanese through sociolinguistic analysis of bilingualism and culturally responsive pedagogy.</p>
+                        </div>
+                        <div class="lang-content" data-lang="ja">
+                            <h3>応用言語学・言語教育</h3>
+                            <p>バイリンガリズムの社会言語学的分析と文化的に応答性のある教育学を通じて、継承日本語の活性化を調査します。</p>
+                        </div>
+                        <div class="lang-content" data-lang="pt">
+                            <h3>Linguística Aplicada e Educação Linguística</h3>
+                            <p>Investiga a revitalização do japonês como língua de herança através da análise sociolinguística do bilinguismo e pedagogia culturalmente responsiva.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">Research Innovation</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.7;">
+                        The creation of Global Japan Lab website will serve as a central platform for hosting a keyword searchable, open-access, and multilingual bibliography and glossary for Japan Studies in Brazil. The Global Japan Lab will also feature a works-in-progress lecture series led by project team members and including the postdoctoral fellow. Contingent upon funding support by USP and FAPESP, we propose a longer-term program of conference panels, workshops, and invited lectures by prominent Japan Studies scholars from Brazil, Japan, and around the world.
+                    </p>
+                </div>
+                <div class="lang-content" data-lang="ja">
+                    <h2 class="section-title">研究革新</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.7;">
+                        グローバル日本研究ラボのウェブサイトの創設は、ブラジルの日本研究のためのキーワード検索可能で、オープンアクセスの多言語書誌・用語集を提供する中央プラットフォームとして機能します。グローバル日本研究ラボはまた、チームメンバーやポスドクを含む進行中の研究発表シリーズを開催させていただきます。USPとFAPESPの資金支援を条件として、ブラジル、日本、世界各地の著名な日本研究学者による長期的な会議パネル、ワークショップ、招聘講演プログラムを提案します。
+                    </p>
+                </div>
+                <div class="lang-content" data-lang="pt">
+                    <h2 class="section-title">Inovação em Pesquisa</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.7;">
+                        A criação do website do Laboratório Global do Japão servirá como uma plataforma central para hospedar uma bibliografia e glossário multilíngue, de acesso aberto e pesquisável por palavras-chave para os Estudos Japoneses no Brasil. O Laboratório Global do Japão também apresentará uma série de palestras de trabalhos em andamento liderada por membros da equipe do projeto e incluindo o pós-doutorando. Dependente do apoio de financiamento da USP e FAPESP, propomos um programa de longo prazo de painéis de conferência, workshops e palestras convidadas por estudiosos proeminentes de Estudos Japoneses do Brasil, Japão e do mundo todo.
+                    </p>
+                </div>
+            </section>
+
+            <div class="cta">
+                <div class="lang-content active" data-lang="en">
+                    <h2>Transforming Japan Studies</h2>
+                    <p>From traditional area studies to innovative global methodologies</p>
+                    <span class="cta-button" onclick="showPage('initiatives')">Explore Research Initiatives</span>
+                </div>
+                <div class="lang-content" data-lang="ja">
+                    <h2>日本研究の変革</h2>
+                    <p>従来の地域研究から革新的なグローバル方法論へ</p>
+                    <span class="cta-button" onclick="showPage('initiatives')">研究イニシアチブを探る</span>
+                </div>
+                <div class="lang-content" data-lang="pt">
+                    <h2>Transformando os Estudos Japoneses</h2>
+                    <p>De estudos regionais tradicionais para metodologias globais inovadoras</p>
+                    <span class="cta-button" onclick="showPage('initiatives')">Explorar Iniciativas de Pesquisa</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- TEAM PAGE -->
+    <div id="team" class="page">
+        <main class="main-content">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Research Team</h1>
+                    <p class="description">
+                        Our interdisciplinary team brings together leading scholars in Japanese studies, linguistics, economics, literature, and international relations to pioneer innovative global methodologies.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Principal Investigators</h2>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <h3 class="team-name">Seth Jacobowitz</h3>
+                        <p class="team-title">Principal Investigator</p>
+                        <p class="team-bio">
+                            Dr. Jacobowitz specializes in modern Japanese literature, visual culture, and media history. In addition to his work on transnational Japanese diaspora, he is also developing AI-assisted research methodologies for the Global Japan Lab. He previously taught at Yale, Texas State, and San Francisco State University.
+                        </p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <h3 class="team-name">Leiko Matsubara Morales</h3>
+                        <p class="team-title">Co-Principal Investigator - Linguistics</p>
+                        <p class="team-bio">
+                            Associate Professor specializing in Japanese-Brazilian sociolinguistics and heritage language education. Her research examines ethnolinguistic vitality among Japanese-Brazilian communities and the development of culturally responsive pedagogical approaches for multilingual contexts.
+                        </p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <h3 class="team-name">Silvio Miyazaki</h3>
+                        <p class="team-title">Co-Principal Investigator - Economics</p>
+                        <p class="team-bio">
+                            Professor of International Economics focusing on ASEAN-Latin America economic integration and Japanese business practices in Brazil. His research analyzes trade policies within transnational networks and macro-economic governance structures.
+                        </p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <h3 class="team-name">Alexandre Uehara</h3>
+                        <p class="team-title">Co-Principal Investigator - International Relations</p>
+                        <p class="team-bio">
+                            Associate Professor specializing in Indo-Pacific geopolitics, Japan-US security relations, and disability studies in Japan. His work examines regional security architectures and their impact on international cooperation frameworks.
+                        </p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <h3 class="team-name">Lilian Yamamoto</h3>
+                        <p class="team-title">Co-Principal Investigator - Literature</p>
+                        <p class="team-bio">
+                            Assistant Professor of Japanese Literature focusing on hibakusha literature, gender studies, and trauma narratives. Her research examines female representation in atomic bomb literature and comparative literary structures between Japanese and Western texts.
+                        </p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <h3 class="team-name">Helder Nakaya</h3>
+                        <p class="team-title">Research Associate</p>
+                        <p class="team-bio">
+                            Dr. Nakaya is a Senior Researcher at Hospital Israelita Albert Einstein in São Paulo and Associate Professor at the University of São Paulo, Brazil. He holds a PhD in Molecular Biology and has extensive training in Bioinformatics. He will participate in the Global Japan Lab as an advisor on implementing AI-assisted methodologies and research.
+                        </p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <h3 class="team-name">Henoch Mandelbaum</h3>
+                        <p class="team-title">Research Associate</p>
+                        <p class="team-bio">
+                            Doctoral candidate in Political Science at USP, specializing in international relations and Japanese foreign policy. Henoch provides essential research support and helps bridge the project's political science components with broader interdisciplinary objectives.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PUBLICATIONS PAGE -->
+    <div id="publications" class="page">
+        <main class="main-content">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Publications</h1>
+                    <p class="description">
+                        Selected recent publications by Global Japan Lab research team members demonstrating our collective expertise across disciplines and our commitment to advancing Japan Studies scholarship.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Research Team Publications</h2>
+                
+                <div class="publications-list">
+                    <div class="author-name">1. Seth Jacobowitz</div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            <em>Edogawa Rampo Reader</em> (2008): <a href="https://archive.org/details/edogawaramporead0000edog" class="publication-link" target="_blank">https://archive.org/details/edogawaramporead0000edog</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            <em>Writing Technology in Meiji Japan</em> (2016): <a href="https://www.hup.harvard.edu/books/9780674088412" class="publication-link" target="_blank">https://www.hup.harvard.edu/books/9780674088412</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            <em>Fernando Morais' Dirty Hearts: The History of Shindo Renmei</em> (2021): <a href="https://link.springer.com/book/10.1007/978-3-030-70562-6" class="publication-link" target="_blank">https://link.springer.com/book/10.1007/978-3-030-70562-6</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            <em>A Escrita no Japão da Era Meiji</em> (2024): <a href="https://www.estacaoliberdade.com.br/escrita-no-japao-da-era-meiji-a?srsltid=AfmBOoogct1P9mpN-h-m-ltdYGfIlZHTrcJDyhrSFTDJ7CneGQaF30gW" class="publication-link" target="_blank">https://www.estacaoliberdade.com.br/escrita-no-japao-da-era-meiji-a</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            <em>The Hirabayashi Hatsunosuke Reader</em> (2025): <a href="https://www.bloomsbury.com/us/hirabayashi-hatsunosuke-reader-9781350378155/" class="publication-link" target="_blank">https://www.bloomsbury.com/us/hirabayashi-hatsunosuke-reader-9781350378155/</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            <em>Modern Japanese Literary Studies</em> (2026): <a href="https://press.umich.edu/Books/M/Modern-Japanese-Literary-Studies2" class="publication-link" target="_blank">https://press.umich.edu/Books/M/Modern-Japanese-Literary-Studies2</a>
+                        </div>
+                    </div>
+                    
+                    <div class="author-name">2. Leiko Matsubara Morales</div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "De língua de imigração a língua de estudo" (2020): <a href="https://periodicos.ufpel.edu.br/index.php/rle/article/view/18743" class="publication-link" target="_blank">https://periodicos.ufpel.edu.br/index.php/rle/article/view/18743</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "The Ongoing Mobilities of Japanese-Brazilians" in <em>Multilingual Brazil</em> (2017): <a href="https://www.taylorfrancis.com/chapters/edit/10.4324/9781315623870-11/ongoing-mobilities-japanese-brazilians-leiko-matsubara-morales-ayako-akamine-maria-emiko-suzuki" class="publication-link" target="_blank">https://www.taylorfrancis.com/chapters/edit/10.4324/9781315623870-11/ongoing-mobilities-japanese-brazilians-leiko-matsubara-morales-ayako-akamine-maria-emiko-suzuki</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "Ethnolinguistic Vitality among Japanese-Brazilians: Challenges and Possibilities" (2014): <a href="https://www.tandfonline.com/doi/abs/10.1080/13670050.2014.964171" class="publication-link" target="_blank">https://www.tandfonline.com/doi/abs/10.1080/13670050.2014.964171</a>
+                        </div>
+                    </div>
+                    
+                    <div class="author-name">3. Silvio Miyazaki</div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "África e Sudeste Asiático no radar acadêmico" (2024): <a href="https://repositorio.usp.br/item/003225829" class="publication-link" target="_blank">https://repositorio.usp.br/item/003225829</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "Perspectives of Economic Integration between ASEAN and Latin America" (2023): <a href="https://repositorio.usp.br/item/003167150" class="publication-link" target="_blank">https://repositorio.usp.br/item/003167150</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "Dissemination of Japanese Quality Control in Brazil" (2022): <a href="https://library.oapen.org/bitstream/handle/20.500.12657/90469/1/978-981-19-4029-3.pdf#page=180" class="publication-link" target="_blank">https://library.oapen.org/bitstream/handle/20.500.12657/90469/1/978-981-19-4029-3.pdf#page=180</a>
+                        </div>
+                    </div>
+                    
+                    <div class="author-name">4. Alexandre Uehara</div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "A ASEAN e os desafios geopolíticos no Indo-Pacífico" (2023): <a href="https://periodicos.ufsc.br/index.php/geosul/article/view/89896" class="publication-link" target="_blank">https://periodicos.ufsc.br/index.php/geosul/article/view/89896</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "Invisible beings: an overview of people with disabilities' circumstances in Japan" (2022): <a href="https://revistas.usp.br/ej/article/view/230006" class="publication-link" target="_blank">https://revistas.usp.br/ej/article/view/230006</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "50th Years of Treaty of Mutual Cooperation and Security Between Japan and The United States of America: Moment of reflection" (2010): <a href="https://www.proquest.com/docview/1324419360?pq-origsite=gscholar&fromopenview=true&sourcetype=Scholarly%20Journals" class="publication-link" target="_blank">https://www.proquest.com/docview/1324419360</a>
+                        </div>
+                    </div>
+                    
+                    <div class="author-name">5. Lilian Yamamoto</div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "A representação feminina na literatura dos hibakusha: Chuva Negra de Masuji Ibuse" (2024): <a href="https://fjsp.org.br/estudos-japoneses/artigo/a-representacao-feminina-na-literatura-dos-hibakusha/" class="publication-link" target="_blank">https://fjsp.org.br/estudos-japoneses/artigo/a-representacao-feminina-na-literatura-dos-hibakusha/</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "Ilíada e Heike Monogatari: comparando temas, estruturas literárias e influências nas respectivas sociedades" (2022): <a href="https://revistas.usp.br/ej/article/view/217926" class="publication-link" target="_blank">https://revistas.usp.br/ej/article/view/217926</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            "O trauma e o gênero em Chuva Negra (1965), de Ibuse Masuji" (2022): <a href="https://revistas.usp.br/ej/article/view/229982" class="publication-link" target="_blank">https://revistas.usp.br/ej/article/view/229982</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- RESEARCH INITIATIVES PAGE -->
+    <div id="initiatives" class="page">
+        <main class="main-content">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Research Initiatives</h1>
+                    <p class="description">
+                        Our research initiatives represent innovative approaches to Global Japan Studies, integrating AI-assisted methodologies with traditional scholarly practices to create new frameworks for transnational research.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Current Initiatives</h2>
+                
+                <div class="methodology-grid">
+                    <div class="methodology-card">
+                        <h3>Digital Diaspora Archive Project</h3>
+                        <p>Leveraging AI tools to analyze decades of Japanese-Brazilian newspapers from Stanford's Hoji Shinbun Digital Collection. This initiative demonstrates scalable archival research methodologies that identify patterns requiring hundreds of hours using conventional approaches.</p>
+                    </div>
+                    
+                    <div class="methodology-card">
+                        <h3>Multilingual Bibliography Platform</h3>
+                        <p>Development of a comprehensive, keyword-searchable database for Japan Studies research in Brazil. The platform will provide open-access resources in Portuguese, Japanese, and English, facilitating international scholarly collaboration.</p>
+                    </div>
+                    
+                    <div class="methodology-card">
+                        <h3>Heritage Language Revitalization</h3>
+                        <p>Systematic study of Japanese language maintenance among Brazilian communities, developing culturally responsive pedagogical frameworks for multilingual education contexts and community-based language preservation programs.</p>
+                    </div>
+                    
+                    <div class="methodology-card">
+                        <h3>Brazil-Japan Economic Integration Analysis</h3>
+                        <p>Comprehensive research on trade policies and economic cooperation models between Brazil and Japan within broader transnational networks, combining archival research with quantitative data analysis for policy recommendations.</p>
+                    </div>
+                    
+                    <div class="methodology-card">
+                        <h3>Comparative Literature and Memory Studies</h3>
+                        <p>Cross-cultural analysis of trauma narratives and memory representation in Japanese and Brazilian literary traditions, with particular focus on hibakusha literature and gender studies approaches to historical memory.</p>
+                    </div>
+                    
+                    <div class="methodology-card">
+                        <h3>AI-Assisted Research Methodology Training</h3>
+                        <p>Developing comprehensive training protocols for humanities scholars to effectively integrate AI tools into traditional research practices, creating sustainable models for technological adoption in academic contexts.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Future Directions</h2>
+                <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
+                    The Global Japan Lab envisions expanding these initiatives through sustained international partnerships, postdoctoral research programs, and collaborative networks with institutions in Japan, the United States, and other regions with significant Japanese diaspora populations.
+                </p>
+                <p style="font-size: 1rem; line-height: 1.6; color: #666666;">
+                    Contingent upon FAPESP funding, we propose establishing regular conference panels, workshops, and visiting scholar programs that position USP as a leading center for innovative Japan Studies research in Latin America.
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <!-- RESOURCES PAGE -->
+    <div id="resources" class="page">
+        <main class="main-content">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Resources</h1>
+                    <p class="description">
+                        Essential academic resources, databases, and tools supporting Global Japan Studies research and facilitating international scholarly collaboration.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Digital Archives &amp; Databases</h2>
+                
+                <div class="publications-list">
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            Stanford Hoji Shinbun Digital Collection: <a href="https://hojisinbun.stanford.edu/" class="publication-link" target="_blank">https://hojisinbun.stanford.edu/</a>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: #666;">Comprehensive digital archive of Japanese diaspora newspapers, providing decades of historical documentation for systematic analysis.</p>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            National Diet Library Digital Collections: <a href="https://dl.ndl.go.jp/" class="publication-link" target="_blank">https://dl.ndl.go.jp/</a>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: #666;">Japan's premier digital repository for historical documents, manuscripts, and rare materials essential for comparative research.</p>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            USP Digital Library: <a href="https://www.teses.usp.br/" class="publication-link" target="_blank">https://www.teses.usp.br/</a>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: #666;">Repository of Brazilian academic research including significant collections on Japanese-Brazilian studies and international relations.</p>
+                    </div>
+                    
+                    <div class="publication-item">
+                        <div class="publication-title">
+                            Brazilian Institute of Geography and Statistics: <a href="https://biblioteca.ibge.gov.br/" class="publication-link" target="_blank">https://biblioteca.ibge.gov.br/</a>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: #666;">Essential demographic and economic data for analyzing Japanese-Brazilian communities and bilateral trade relationships.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">AI Research Tools</h2>
+                
+                <div class="methodology-grid">
+                    <div class="methodology-card">
+                        <h3>Large Language Models</h3>
+                        <p>Advanced AI assistants for text analysis, translation support, and research methodology development. Essential for processing large corpora and identifying patterns in multilingual datasets.</p>
+                    </div>
+                    
+                    <div class="methodology-card">
+                        <h3>Japanese OCR Technology</h3>
+                        <p>Specialized optical character recognition tools for digitizing historical Japanese texts and newspapers, enabling systematic analysis of previously inaccessible archival materials.</p>
+                    </div>
+                    
+                    <div class="methodology-card">
+                        <h3>Statistical Analysis Platforms</h3>
+                        <p>Computational tools for quantitative analysis of economic data, demographic trends, and linguistic patterns in Japanese-Brazilian communities and bilateral trade relationships.</p>
+                    </div>
+                    
+                    <div class="methodology-card">
+                        <h3>Digital Humanities Frameworks</h3>
+                        <p>Integrated platforms combining traditional humanities research methods with computational approaches for textual analysis, network mapping, and collaborative annotation systems.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- COLLABORATION PAGE -->
+    <div id="collaboration" class="page">
+        <main class="main-content">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Collaboration</h1>
+                    <p class="description">
+                        Global Japan Lab seeks strategic partnerships with leading institutions worldwide to advance interdisciplinary research methodologies and foster international scholarly networks in Japan Studies.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">International Partners</h2>
+                
+                <div class="team-grid">
+                    <div class="team-card">
+                        <h3 class="team-name">Stanford University</h3>
+                        <p class="team-title">Hoji Shinbun Digital Collection Partnership</p>
+                        <p class="team-bio">
+                            Collaborative access to decades of Japanese diaspora newspapers for AI-assisted analysis. This partnership enables systematic research on transnational Japanese communities using cutting-edge digital humanities methodologies.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="cta">
+                <h2>Join Our Network</h2>
+                <p>Connect with Global Japan Lab for collaborative research opportunities</p>
+                <a href="mailto:contact@globaljapanlab.usp.br" class="cta-button">Contact Us</a>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>Global Japan Lab</h3>
+                <p>University of São Paulo<br>
+                   Faculdade de Filosofia, Letras e Ciências Humanas<br>
+                   São Paulo, SP, Brazil</p>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>Email: <a href="mailto:contact@globaljapanlab.usp.br">contact@globaljapanlab.usp.br</a><br>
+                   Phone: +55 11 3091-4142<br>
+                   <a href="https://www.fflch.usp.br/" target="_blank">FFLCH-USP Website</a></p>
+            </div>
+            <div>
+                <h3>Research Areas</h3>
+                <p>Digital Humanities<br>
+                   Japanese Diaspora Studies<br>
+                   Economic Integration<br>
+                   Heritage Language Education<br>
+                   International Relations</p>
+            </div>
+            <div>
+                <h3>Funding</h3>
+                <p><a href="https://fapesp.br/" target="_blank">FAPESP</a><br>
+                   <a href="https://www.usp.br/" target="_blank">Universidade de São Paulo</a><br>
+                   International Thematic Grant<br>
+                   AI-Assisted Research Initiative</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Global Japan Lab, University of São Paulo. This prototype demonstrates AI-assisted academic website development for FAPESP grant applications.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            const activeLink = document.querySelector(`[data-page="${pageId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Close mobile menu if open
+            const navMenu = document.getElementById('navMenu');
+            if (navMenu) {
+                navMenu.classList.remove('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Language Switching
+        function switchLanguage(lang) {
+            // Update language buttons
+            const langButtons = document.querySelectorAll('.lang-btn');
+            langButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update language content
+            const langContents = document.querySelectorAll('.lang-content');
+            langContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.dataset.lang === lang) {
+                    content.classList.add('active');
+                }
+            });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const menuToggle = document.getElementById('menuToggle');
+            
+            if (navMenu && menuToggle) {
+                navMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // Language switcher
+            const langButtons = document.querySelectorAll('.lang-btn');
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    switchLanguage(this.dataset.lang);
+                });
+            });
+            
+            // Navigation links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    if (page) {
+                        showPage(page);
+                    }
+                });
+            });
+            
+            // Logo click
+            const logo = document.querySelector('.logo');
+            if (logo) {
+                logo.addEventListener('click', function() {
+                    showPage('home');
+                });
+            }
+            
+            // CTA buttons
+            const ctaButtons = document.querySelectorAll('.cta-button');
+            ctaButtons.forEach(button => {
+                if (button.getAttribute('onclick')) {
+                    // Skip buttons that already have onclick handlers
+                    return;
+                }
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Handle other CTA button actions if needed
+                });
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navMenu = document.getElementById('navMenu');
+            const menuToggle = document.getElementById('menuToggle');
+            
+            if (navMenu && menuToggle && 
+                !navMenu.contains(e.target) && 
+                !menuToggle.contains(e.target) &&
+                navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
